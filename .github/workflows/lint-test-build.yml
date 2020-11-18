@@ -20,9 +20,6 @@ jobs:
       PYTHONUSERBASE: ${{ github.workspace }}/.cache/py-user-base
       PRE_COMMIT_HOME: ${{ github.workspace }}/.cache/pre-commit-cache
   
-    strategy:
-      matrix:
-        python-version: [3.5, 3.6, 3.7, 3.8]
 
     steps:
       - name: Add custom PYTHONUSERBASE to PATH
@@ -37,7 +34,7 @@ jobs:
         id: python
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: '3.8'
       
       # This step caches our Python dependencies. To make sure we
       # only restore a cache when the dependencies, the python version,
