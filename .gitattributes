@@ -1,0 +1,7 @@
+* text=auto eol=lf
+
+# Specifically declare known binary files to avoid problems with Git versions
+# before 2.10, where the 'eol' setting has higher priority than 'text=auto',
+# causing binary files to get normalized and corrupted otherwise.
+*.png binary
+*.whl binary
