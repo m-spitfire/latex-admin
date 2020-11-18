@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    paths-ignore:
+      - "docs/**"
+      - "*.ini"
+      - "*.md"
+      - "**/*.txt"
+      - "*.rst"
+      - ".gitignore"
+      - ".gitattributes"
+      - ".editorconfig"
+    branches: [master]
+  pull_request:
+    paths-ignore:
+      - "docs/**"
+      - "*.ini"
+      - "*.md"
+      - "**/*.txt"
+      - "*.rst"
+      - ".gitignore"
+      - ".gitattributes"
+      - ".editorconfig"
+
+jobs:
+  lint-n-pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.8
+        id: python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      - name: Install latest pip and poetry
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Run pre-commit hooks
+        run: poetry run pre-commit run --all-files
+  build:
+    name: ${{ matrix.os }} / ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.5, 3.6, 3.7, 3.8]
+        os: [macos, ubuntu, windows]
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry
+          poetry install
+          poetry env use ${{ matrix.python-version }}
+
+      - name: Build the package
+        run: poetry build
