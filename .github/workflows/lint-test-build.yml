@@ -56,11 +56,11 @@ jobs:
           ${{ hashFiles('./pyproject.yaml', './poetry.lock') }}"
 
       # Install our dependencies if we did not restore a dependency cache
-      - name: Install dependencies using pipenv
+      - name: Install dependencies using poetry
         if: steps.python_cache.outputs.cache-hit != 'true'
         run: |
           pip install poetry
-          poetry install --dev --system
+          poetry install
 
       # We will not run `flake8` here, as we will use a separate flake8
       # action. As pre-commit does not support user installs, we set
@@ -77,19 +77,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # We run `coverage` using the `python` command so we can suppress
-      # irrelevant warnings in our CI output.
-      - name: Run tests and generate coverage report
-        run: |
-            python -Wignore -m coverage run -m unittest
-            coverage report -m
-  
-      # This step will publish the coverage reports coveralls.io and
-      # print a "job" link in the output of the GitHub Action
-      - name: Publish coverage report to coveralls.io
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: coveralls
       - name: Build the package
         run: poetry build
         
