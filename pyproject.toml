@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "latex-admin"
-version = "0.1.0"
+version = "0.1.1b"
 description = "A CLI tool for managing LaTeX projects(inspired by django-admin)"
 authors = ["Murad Bashirov <carlsonmu@gmail.com>"]
 license = "Apache-2.0"
