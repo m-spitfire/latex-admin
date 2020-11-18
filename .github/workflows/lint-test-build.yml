@@ -60,21 +60,11 @@ jobs:
           poetry install
 
       # We will not run `flake8` here, as we will use a separate flake8
-      # action. As pre-commit does not support user installs, we set
-      # PIP_USER=0 to not do a user install.
+      # action.
       - name: Run pre-commit hooks
         run: |
           source $(poetry env info --path)/bin/activate
-          SKIP=flake8 pre-commit run --all-files
-
-      # This step requires `pull_request_target`, as adding annotations
-      # requires "write" permissions to the repo.
-      - name: Run flake8
-        uses: julianwachholz/flake8-action@v1
-        with:
-          checkName: lint-test
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          pre-commit run --all-files
 
       - name: Build the package
         run: poetry build
