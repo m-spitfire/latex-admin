@@ -1,10 +1,12 @@
 """Console script for latex_admin."""
 import sys
+import typing as t
+
 import click
 
 
 @click.command()
-def main(args=None):
+def main(args: t.Optional[str] = None) -> int:
     """Console script for latex_admin."""
     click.echo("Replace this message by putting your code into "
                "latex_admin.cli.main")

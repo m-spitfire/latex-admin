@@ -4,13 +4,13 @@
 
 
 import unittest
-from click.testing import CliRunner
 
-from latex_admin import latex_admin
+from click.testing import CliRunner
+# from latex_admin import latex_admin
 from latex_admin import cli
 
 
-class TestLatex_admin(unittest.TestCase):
+class TestLatexAdmin(unittest.TestCase):
     """Tests for `latex_admin` package."""
 
     def setUp(self):
@@ -26,8 +26,8 @@ class TestLatex_admin(unittest.TestCase):
         """Test the CLI."""
         runner = CliRunner()
         result = runner.invoke(cli.main)
-        assert result.exit_code == 0
-        assert 'latex_admin.cli.main' in result.output
+        self.assertEqual(result.exit_code, 0)
+        self.assertIn('latex_admin.cli.main', result.output)
         help_result = runner.invoke(cli.main, ['--help'])
-        assert help_result.exit_code == 0
-        assert '--help  Show this message and exit.' in help_result.output
+        self.assertEqual(help_result.exit_code, 0)
+        self.assertIn('--help  Show this message and exit.', help_result.output)
