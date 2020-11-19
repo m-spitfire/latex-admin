@@ -17,6 +17,9 @@ LaTeX Admin
 
 A CLI tool for managing LaTeX projects(inspired by django-admin)
 
+NOTE: this is not a stable release. The project has no functionality right now.
+
+Do not try to download it from pypi, it's not doing anthing
 
 * Free software: Apache Software License 2.0
 * Documentation: https://latex-admin.readthedocs.io.
